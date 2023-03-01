@@ -1,22 +1,47 @@
 import { Component } from 'react';
 import MarvelService from '../../services/MarvelService';
+import Spinner from '../Spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import './randomChar.scss';
-import thor from '../../resources/img/thor.jpeg';
+
 import mjolnir from '../../resources/img/mjolnir.png';
 
 class RandomChar extends Component {
-    constructor(props) {
-        super(props);
-        this.updateChar()
-    }
     state = {
-        char: {}
+        char: {},
+        loading: true,
+        error: false
     }
 
     marvelService = new MarvelService();
 
+    componentDidMount() {
+        this.updateChar();
+    }
+
     onCharLoaded = (char) => {
-        this.setState({char})
+        this.setState({
+            char,
+            loading: false
+        })
+    }
+
+    onCharLoading = () => {
+        this.setState({
+            loading: true
+        })
+    }
+
+    onError = () => {
+        this.setState({
+            loading: false,
+            error: true
+        })
+    }
+
+    onUpdateChar = () => {
+        this.onCharLoading();
+        this.updateChar();
     }
 
     updateChar = () => {
@@ -24,27 +49,20 @@ class RandomChar extends Component {
         this.marvelService
         .getCharacter(id)
         .then(this.onCharLoaded)
+        .catch(this.onError);
     }
 
     render() {
-        const {char: {nameChar, description, thumbnail, homepage, wiki}} = this.state;
+        const {char, loading, error} = this.state;
+        const spinner = loading ? <Spinner/> : null;
+        const errorMessage = error ? <ErrorMessage/> : null;
+        const content = !(spinner || errorMessage) ? <View char={char}/> : null;
+
         return (
             <div className="randomchar">
-                <div className="randomchar__block">
-                    <img src={thumbnail} alt="Random character" className="randomchar__img"/>
-                    <div className="randomchar__info">
-                        <p className="randomchar__name">{nameChar}</p>
-                        <p className="randomchar__descr">{description}</p>
-                        <div className="randomchar__btns">
-                            <a href={homepage} className="button button__main">
-                                <div className="inner">homepage</div>
-                            </a>
-                            <a href={wiki} className="button button__secondary">
-                                <div className="inner">Wiki</div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                {content}
+                {spinner}
+                {errorMessage} 
                 <div className="randomchar__static">
                     <p className="randomchar__title">
                         Random character for today!<br/>
@@ -54,13 +72,37 @@ class RandomChar extends Component {
                         Or choose another one
                     </p>
                     <button className="button button__main">
-                        <div className="inner">try it</div>
+                        <div className="inner" onClick={this.onUpdateChar}>try it</div>
                     </button>
                     <img src={mjolnir} alt="mjolnir" className="randomchar__decoration"/>
                 </div>
             </div>
         )
     }
+}
+
+const View = ({char}) => {
+    const {nameChar, description, thumbnail, homepage, wiki} = char;
+
+    return (
+        <div className="randomchar__block">
+            <img src={thumbnail} alt="Random character" className="randomchar__img" 
+            style={thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg' ? { objectFit: 'contain'} : {}}/>
+            <div className="randomchar__info">
+                <p className="randomchar__name">{nameChar}</p>
+                <p className="randomchar__descr">{description}</p>
+                <div className="randomchar__btns">
+                    <a href={homepage} className="button button__main">
+                        <div className="inner">homepage</div>
+                    </a>
+                    <a href={wiki} className="button button__secondary">
+                        <div className="inner">Wiki</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    )
 }
 
 export default RandomChar;
