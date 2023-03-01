@@ -19,14 +19,16 @@ class RandomChar extends Component {
         this.updateChar();
     }
 
-    // componentWillUnmount() {
-    //     this.onUpdateChar();
-    // }
-
     onCharLoaded = (char) => {
         this.setState({
-            char, 
+            char,
             loading: false
+        })
+    }
+
+    onCharLoading = () => {
+        this.setState({
+            loading: true
         })
     }
 
@@ -35,6 +37,11 @@ class RandomChar extends Component {
             loading: false,
             error: true
         })
+    }
+
+    onUpdateChar = () => {
+        this.onCharLoading();
+        this.updateChar();
     }
 
     updateChar = () => {
@@ -65,7 +72,7 @@ class RandomChar extends Component {
                         Or choose another one
                     </p>
                     <button className="button button__main">
-                        <div className="inner" onClick={this.updateChar}>try it</div>
+                        <div className="inner" onClick={this.onUpdateChar}>try it</div>
                     </button>
                     <img src={mjolnir} alt="mjolnir" className="randomchar__decoration"/>
                 </div>
@@ -79,7 +86,8 @@ const View = ({char}) => {
 
     return (
         <div className="randomchar__block">
-            <img src={thumbnail} alt="Random character" className="randomchar__img" style={thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg' ? { objectFit: 'contain'} : {}}/>
+            <img src={thumbnail} alt="Random character" className="randomchar__img" 
+            style={thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg' ? { objectFit: 'contain'} : {}}/>
             <div className="randomchar__info">
                 <p className="randomchar__name">{nameChar}</p>
                 <p className="randomchar__descr">{description}</p>
