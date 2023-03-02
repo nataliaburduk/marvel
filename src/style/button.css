@@ -80,4 +80,7 @@
 }
 .button:hover {
   transform: translateY(-5px);
+}
+.button:disabled {
+  filter: grayscale(0.5);
 }/*# sourceMappingURL=button.css.map */
