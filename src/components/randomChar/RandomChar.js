@@ -50,6 +50,9 @@ class RandomChar extends Component {
         .getCharacter(id)
         .then(this.onCharLoaded)
         .catch(this.onError);
+
+        // this.foo.bar = 0;
+
     }
 
     render() {

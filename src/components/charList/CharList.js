@@ -16,6 +16,9 @@ class CharList extends Component {
         this.marvelService.getAllCharacters()
         .then(this.onListLoaded)
         .catch(this.onError)
+
+        // this.foo.bar = 0;
+
     }
 
     onListLoaded = (charList) => {

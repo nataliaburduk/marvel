@@ -33,6 +33,7 @@ import thor from '../../resources/img/thor.jpeg';
         }
 
         this.onCharLoading();
+        // this.foo.bar = 0;
 
         this.marvelService
         .getCharacter(charId)
