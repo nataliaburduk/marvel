@@ -32,7 +32,8 @@ class MarvelService {
       description: char.description > 210 ? (char.description.slice(0,10) + '...') : 'There is no data about this character',
       thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
       homepage: char.urls[0].url,
-      wiki: char.urls[1].url
+      wiki: char.urls[1].url,
+      comics: char.comics.items
     }
   }
 
