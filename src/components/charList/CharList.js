@@ -18,17 +18,16 @@ class CharList extends Component {
     
     marvelService = new MarvelService();
 
+    componentDidMount() {
+        this.onLoadMoreChar();
+    }
+
     onLoadMoreChar = (offset) => {
         this.onCharListLoading();
         this.marvelService.getAllCharacters(offset)
         .then(this.onListLoaded)
         .catch(this.onError)
     }
-
-    componentDidMount() {
-        this.onLoadMoreChar();
-    }
-
 
     onListLoaded = (newCharList) => {
         let ended = false;
@@ -44,7 +43,6 @@ class CharList extends Component {
             charEnded: ended
         }))
     }
-    
 
     onCharListLoading = () => {
         this.setState({
@@ -59,20 +57,45 @@ class CharList extends Component {
         })
     }    
 
-    renderListItem = (item) => {
+    itemRefs = [];
+
+    setRef = (ref) => {
+        this.itemRefs.push(ref);
+    }
+
+    focusOnItem = (id) => {
+        this.itemRefs.forEach(item => item.classList.remove('char__item_selected'));
+        this.itemRefs[id].classList.add('char__item_selected');
+        this.itemRefs[id].focus();
+    }
+
+    renderListItem = (item, i) => {
         return(
-        <li className="char__item" key={item.id} 
-        onClick={() => this.props.onCharSelected(item.id)}>
-            <img src={item.thumbnail} alt="List image"
-                style={item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg' ? { objectFit: 'fill'} : {}}/>
-            <div className="char__name">{item.nameChar}</div>
-        </li>
+            <li 
+            ref={this.setRef}
+            className="char__item" 
+                tabIndex={0}
+                key={item.id} 
+                onClick={() => { 
+                    this.props.onCharSelected(item.id); 
+                    this.focusOnItem(i);
+                }}
+                onKeyPress = {(e) => {
+                    if (e.key === ' ' || e.key === "Enter") {
+                        this.props.onCharSelected(item.id);
+                        this.focusOnItem(i);
+                    }
+                }}>
+                    <img src={item.thumbnail} alt="List image"
+                        style={item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg' ? { objectFit: 'fill'} : {}}/>
+                    <div className="char__name">{item.nameChar}</div>
+            </li>
         )
-}
+    }
 
     render() {
         const {charList, offset, newCharsLoading, loading, error, charEnded} = this.state;
-        const items = charList.map(item => this.renderListItem(item));
+        const items = charList.map((item, i) => this.renderListItem(item, i));
 
         const spinner = loading ? <Spinner/> : null;
         const errorMessage = error ? <ErrorMessage/> : null;
