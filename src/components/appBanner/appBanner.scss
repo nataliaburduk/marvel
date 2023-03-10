@@ -6,8 +6,13 @@
         background-color: $dark;
         height: 100px;
         padding: 0 25px 0 45px;
+        margin-top: 50px;
         display: grid;
         grid-template-columns: 152px auto 133px;
+        img {
+            width: 152px;
+            height: 100px;
+        }
         &-text {
             font-weight: bold;
             font-size: 24px;
