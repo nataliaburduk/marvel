@@ -1,12 +1,16 @@
 .comics {
     &__list {
         margin-top: 45px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     &__grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, 225px);
-        justify-content: space-between;
+        justify-content: center;
         row-gap: 55px;
+        column-gap: 55px;
     }
     &__item {
         transition: 0.3s transform;

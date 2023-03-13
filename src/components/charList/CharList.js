@@ -75,10 +75,10 @@ const CharList = (props) => {
 
     return (
         <div className="char__list">
-            <ul className="char__grid">
-                {items}
                 {spinner}
                 {errorMessage}
+            <ul className="char__grid">
+                {items}
             </ul>
             <button 
                 className="button button__main button__long" 

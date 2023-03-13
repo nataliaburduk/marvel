@@ -57,13 +57,12 @@ const ComicsList = () => {
     const spinner = loading && !newComicsLoading ? <Spinner/> : null;
     const errorMessage = error ? <ErrorMessage/> : null;
 
-
     return (
         <div className="comics__list">
-            <ul className="comics__grid">
-                {items}
                 {spinner}
                 {errorMessage}
+            <ul className="comics__grid">
+                {items}
             </ul>
             <button className="button button__main button__long"
                     onClick={() => onLoadMoreComics(offset)} 
