@@ -6,12 +6,11 @@ import Spinner from '../Spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import './singleComicPage.scss';
+import AppBanner from '../appBanner/AppBanner';
 
 const SingleComicPage = () => {
   const {comicId} = useParams();
-
   const [comic, setComic] = useState({});
-
   const {loading, error, getComic, clearError} = useMarvelService();
 
   useEffect(() => {
@@ -34,6 +33,7 @@ const SingleComicPage = () => {
 
   return (
     <>
+      <AppBanner/>
       {content}
       {spinner}
       {errorMessage}
