@@ -63,7 +63,7 @@ const CharList = (props) => {
                 }}>
                     <img src={item.thumbnail} alt="List image"
                         style={item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg' ? { objectFit: 'fill'} : {}}/>
-                    <div className="char__name">{item.nameChar}</div>
+                    <div className="char__name">{item.name}</div>
             </li>
         )
     }
