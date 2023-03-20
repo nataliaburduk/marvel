@@ -14,11 +14,11 @@ const RandomChar = () => {
 
     useEffect(() => {
         updateChar();
-        const timerId = setInterval(updateChar, 6000);
+        // const timerId = setInterval(updateChar, 6000);
 
-        return () => {
-            clearInterval(timerId)
-        }
+        // return () => {
+        //     clearInterval(timerId)
+        // }
     }, []);
 
     const onCharLoaded = (char) => {
@@ -63,14 +63,14 @@ const RandomChar = () => {
 }
 
 const View = ({char}) => {
-    const {nameChar, description, thumbnail, homepage, wiki} = char;
+    const {name, description, thumbnail, homepage, wiki} = char;
 
     return (
         <div className="randomchar__block">
             <img src={thumbnail} alt="Random character" className="randomchar__img" 
             style={thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg' ? { objectFit: 'contain'} : {}}/>
             <div className="randomchar__info">
-                <p className="randomchar__name">{nameChar}</p>
+                <p className="randomchar__name">{name}</p>
                 <p className="randomchar__descr">{description}</p>
                 <div className="randomchar__btns">
                     <a href={homepage} className="button button__main">

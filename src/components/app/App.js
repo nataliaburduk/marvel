@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import AppHeader from "../appHeader/AppHeader";
-import { MainPage, ComicPage, Page404, SingleComicPage } from "../pages";
+import { MainPage, ComicPage, Page404, SingleComicPage, SingleCharacterPage } from "../pages";
 
 const App = () => {
     
@@ -16,6 +16,7 @@ const App = () => {
                         <Route path='/comics' element={<ComicPage/>}/>
                         <Route path='/comics' element={<ComicPage/>}/>
                         <Route path='/comics/:comicId' element={<SingleComicPage/>}/>
+                        <Route path='/characters/:charId' element={<SingleCharacterPage/>}/>
                         <Route path='*' element={<Page404/>} />
                         
                     </Routes>
