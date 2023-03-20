@@ -6,7 +6,7 @@ const ComicPage = () => {
   return (
     <>
       <AppBanner/>
-      <ComicsList/>
+      <ComicsList />
     </>
   )
 }
