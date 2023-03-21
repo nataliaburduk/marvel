@@ -5,12 +5,13 @@ import {Link} from 'react-router-dom';
 
 import useMarvelService from '../../services/MarvelService';
 import ErrorMessage from '../errorMessage/ErrorMessage';
+import Spinner from '../Spinner/Spinner';
 
 import './charForm.scss';
 
 const CharForm = () => {
     const [chars, setChar] = useState(null);
-    const {loading, error, getCharacterByName, clearError} = useMarvelService();
+    const {process, setProcess, getCharacterByName, clearError} = useMarvelService();
 
     const onCharLoaded = (chars) => {
         setChar(chars);
@@ -20,10 +21,11 @@ const CharForm = () => {
       clearError();
       
       getCharacterByName(name)
-      .then(onCharLoaded);
+      .then(onCharLoaded)
+      .then(() => setProcess('confirmed'))
     }
 
-    const errorMessage = error ? <div className="char__form-critical-error"><ErrorMessage /></div> : null;
+    const errorMessage = process === 'error' ? <div className="char__form-critical-error"><ErrorMessage /></div> : null;
     const results = !chars ? null : chars.length > 0 ?
                     <div className="char__form-wrapper">
                         <div className="char__form-success">There is! Visit {chars[0].name} page?</div>
@@ -60,7 +62,7 @@ const CharForm = () => {
                         <button 
                             type='submit' 
                             className="button button__main"
-                            disabled={loading}>
+                            disabled={process === 'loading'}>
                             <div className="inner">Find</div>
                         </button>
                     </div>
