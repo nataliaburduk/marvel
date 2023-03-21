@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 import useMarvelService from '../../services/MarvelService';
 import Spinner from '../Spinner/Spinner';
@@ -95,9 +95,15 @@ const CharList = (props) => {
         )
     }
 
+    const elements = useMemo(() => {
+        return (
+            setContent(process, () => renderItems(charList), newCharsLoading)
+            )
+    }, [process])
+
     return (
         <div className="char__list">
-            {setContent(process, () => renderItems(charList), newCharsLoading)}
+            {elements}
             <button 
                 disabled={newCharsLoading} 
                 style={{'display' : charEnded ? 'none' : 'block'}}
